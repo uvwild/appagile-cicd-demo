@@ -136,11 +136,11 @@ function deploy() {
 
   sleep 2
 
-  oc import-image jenkins:v3.7 --from="registry.access.redhat.com/openshift3/jenkins-2-rhel7" --confirm -n openshift 2>/dev/null
+  oc import-image jenkins:v3.6 --from="registry.access.redhat.com/openshift3/jenkins-2-rhel7" --confirm -n openshift 2>/dev/null
 
   sleep 5
 
-  oc tag jenkins:v3.7 jenkins:latest -n openshift
+  oc tag jenkins:v3.6 jenkins:latest -n openshift
   oc new-app jenkins-ephemeral -n cicd-$PRJ_SUFFIX
 
   sleep 2

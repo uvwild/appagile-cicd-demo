@@ -44,7 +44,7 @@
 
 * issues
 
-    * oc import-image jenkins:v3.7 --from="registry.access.redhat.com/openshift3/jenkins-2-rhel7" --confirm -n openshift
+    * oc import-image jenkins:v3.6 --from="registry.access.redhat.com/openshift3/jenkins-2-rhel7" --confirm -n openshift
       Error from server (Forbidden): User "developer" cannot update imagestreams.image.openshift.io in the namespace "openshift": User "developer" cannot update imagestreams.image.openshift.io in project "openshift" (put imagestreams.image.openshift.io jenkins)
     *  workaround: <br>
          * import jenkins image locally
