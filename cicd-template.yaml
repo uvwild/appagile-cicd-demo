@@ -39,7 +39,6 @@ objects:
   subjects:
   - kind: ServiceAccount
     name: default
-# Pipeline
 - apiVersion: v1
   kind: BuildConfig
   metadata:
@@ -67,7 +66,6 @@ objects:
           value: ${DEV_PROJECT}
         - name: STAGE_PROJECT
           value: ${STAGE_PROJECT}
-# add -B to avoid the download progress in logs
         jenkinsfile: |-
           def version, mvnCmd = "mvn -B -s configuration/cicd-settings-nexus3.xml"
 
@@ -118,9 +116,6 @@ objects:
                   script {
                     openshift.withCluster() {
                       openshift.withProject(env.DEV_PROJECT) {
-# standard java image only works with springboot tomcat java app 
-# oc import-image redhat-openjdk18-openshift --from="registry.access.redhat.com/redhat-openjdk-18/openjdk18-openshift" --confirm
-# otherwise use wildfly
                         openshift.newBuild("--name=springbootdemo", "--image-stream=wildfly", "--binary=true")
                       }
                     }
@@ -130,8 +125,7 @@ objects:
               stage('Build Image') {
                 steps {
                   sh "rm -rf oc-build && mkdir -p oc-build/deployments"
-    		          sh "cp target/bootwildfly-1.0.war oc-build/deployments/ROOT.war"
-                  
+                  sh "cp target/bootwildfly-1.0.war oc-build/deployments/ROOT.war"                  
                   script {
                     openshift.withCluster() {
                       openshift.withProject(env.DEV_PROJECT) {
@@ -165,20 +159,18 @@ objects:
                         while (dc.object().spec.replicas != dc.object().status.availableReplicas) {
                             sleep 10
                         }
-                        # this 
                         openshift.set("triggers", "dc/springbootdemo", "--manual")
                       }
                     }
                   }
                 }
               }
-# only run deploy if no automatic trigger is set
               stage('Deploy DEV') {
                 when {
                   expression {
                     openshift.withCluster() {
                       openshift.withProject(env.DEV_PROJECT) {
-                      def dc = openshift.selector("dc", "tasks")
+                      def dc = openshift.selector("dc", "springbootdemo")
                       def dcmap = dc.object()
                       return !dcmap.spec.triggers.imageChangeParams.automatic
                   }
@@ -195,7 +187,6 @@ objects:
               }
               stage('Promote to STAGE?') {
                 steps {
-# this creates a dialog in the pipeline UI
                   timeout(time:15, unit:'MINUTES') {
                       input message: "Promote to STAGE?", ok: "Promote"
                   }

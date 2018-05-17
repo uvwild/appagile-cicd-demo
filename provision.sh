@@ -30,7 +30,7 @@ function usage() {
 }
 
 ARG_USERNAME=
-ARG_PROJECT_SUFFIX=
+ARG_PROJECT_SUFFIX=springbootdemo
 ARG_COMMAND=
 ARG_EPHEMERAL=false
 ARG_OC_OPS=
@@ -113,12 +113,11 @@ done
 LOGGEDIN_USER=$(oc $ARG_OC_OPS whoami)
 OPENSHIFT_USER=${ARG_USERNAME:-$LOGGEDIN_USER}
 PRJ_SUFFIX=${ARG_PROJECT_SUFFIX:-`echo $OPENSHIFT_USER | sed -e 's/[-@].*//g'`}
-GITHUB_ACCOUNT=${GITHUB_ACCOUNT:-OpenShiftDemos}
 GITHUB_REF=${GITHUB_REF:-ocp-3.7}
 
 function deploy() {
-  oc $ARG_OC_OPS new-project dev-$PRJ_SUFFIX   --display-name="Tasks - Dev"
-  oc $ARG_OC_OPS new-project stage-$PRJ_SUFFIX --display-name="Tasks - Stage"
+  oc $ARG_OC_OPS new-project dev-$PRJ_SUFFIX   --display-name="springbootdemo - Dev"
+  oc $ARG_OC_OPS new-project stage-$PRJ_SUFFIX --display-name="springbootdemo - Stage"
   oc $ARG_OC_OPS new-project cicd-$PRJ_SUFFIX  --display-name="CI/CD"
 
   sleep 2
@@ -217,7 +216,7 @@ fi
 pushd ~ >/dev/null
 START=`date +%s`
 
-echo_header "AppAgile CI/CD Springboot Demo ($(date))"
+echo_header "OpenShift CI/CD Demo ($(date))"
 
 case "$ARG_COMMAND" in
     delete)
