@@ -1,5 +1,6 @@
 * first Install
     * run provisioning.sh deploy as a system user or one with sufficient permissions
+    provisioning.sh deploy --user developer
 
 * setup maven repo in nexus 
     * login admin/admin123
@@ -48,4 +49,3 @@
 * continue
     * oc project cicd-springbootdemo
     * oc start-build springbootdemo-pipeline
-    
