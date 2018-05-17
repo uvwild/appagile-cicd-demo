@@ -23,7 +23,7 @@
     * TODO: autoload java plugin for sonarqube
 
 * gogs
-    * create account in gogs (gogs/gogs)
+    * login gogs/gogs
     * gogs repo created (gogs/openshift-springbootdemo)
     * (add other userss as collaborator to gogs repo!!)
     * git clone https://github.com/uvwild/springbootdemo.git
