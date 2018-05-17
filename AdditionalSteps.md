@@ -1,6 +1,9 @@
 * first Install
-    * run provisioning.sh deploy as a system user or one with sufficient permissions
-    provisioning.sh deploy --user developer
+    * git clone https://github.com/uvwild/appagile-cicd-demo.git
+    * run provisioning.sh deploy as a system user 
+        provisioning.sh deploy --user developer
+    * or as another user with sufficient permissions
+        provisioning.sh deploy
 
 * nexus
     * login admin/admin123
