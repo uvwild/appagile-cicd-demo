@@ -2,15 +2,17 @@
     * run provisioning.sh deploy as a system user or one with sufficient permissions
     provisioning.sh deploy --user developer
 
-* setup maven repo in nexus 
+* nexus
     * login admin/admin123
     * nexus configure allow redeploy for maven-releases in demo 
 
 * sonar (each time)
     * login admin/admin
-    * go to administration/marketplace 
-    * install SonarJava plugin
-    * restart sonar!!
+    * go to quality profiles and verify the JAVA profile
+        * ELSE
+        * go to administration/marketplace 
+        * install SonarJava plugin
+        * restart sonar!!
     * test sonar setup
         * get deploy key (e.g. springbootdemo: b57f766a18413dfc58efaf4586e189ba601ea7ce)
         ```sh

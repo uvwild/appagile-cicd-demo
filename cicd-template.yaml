@@ -170,9 +170,10 @@ objects:
                   expression {
                     openshift.withCluster() {
                       openshift.withProject(env.DEV_PROJECT) {
-                      def dc = openshift.selector("dc", "springbootdemo")
-                      def dcmap = dc.object()
-                      return !dcmap.spec.triggers.imageChangeParams.automatic
+                        def dc = openshift.selector("dc", "springbootdemo")
+                        def dcmap = dc.object()
+                        return !dcmap.spec.triggers.imageChangeParams.automatic
+                      }
                     }
                   }
                 }
