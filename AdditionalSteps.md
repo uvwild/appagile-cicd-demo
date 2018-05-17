@@ -1,26 +1,39 @@
-* setup maven repo in nexus
-* add java project
-* create gogs repo (no auth for now)
-* load jenkins gogs plugin
-* setup webhook for jenkins
-* configure sonar (each time)
-    * install sonar java plugin (admin/admin)
-    * download via administration/marketplace SonarJava
+* first Install
+    * run provisioning.sh deploy as a system user or one with sufficient permissions
+
+* setup maven repo in nexus 
+    * login admin/admin123
+    * nexus configure allow redeploy for maven-releases in demo 
+
+* sonar (each time)
+    * login admin/admin
+    * go to administration/marketplace 
+    * install SonarJava plugin
     * restart sonar!!
-
-* test sonar setup
-    * get deploy key (e.g. springbootdemo: b57f766a18413dfc58efaf4586e189ba601ea7ce)
-
+    * test sonar setup
+        * get deploy key (e.g. springbootdemo: b57f766a18413dfc58efaf4586e189ba601ea7ce)
         ```sh
         mvn sonar:sonar \
           -Dsonar.host.url=http://sonarqube-cicd.192.168.42.249.nip.io \
           -Dsonar.login=b57f766a18413dfc58efaf4586e189ba601ea7ce
         ```
-* TODO: autoload java plugin for sonarqube
+    * TODO: autoload java plugin for sonarqube
 
-* nexus configure allow redeploy for maven repositories
+* gogs
+    * create account in gogs (gogs/gogs)
+    * gogs repo created (gogs/openshift-springbootdemo)
+    * (add other userss as collaborator to gogs repo!!)
+    * git clone https://github.com/uvwild/springbootdemo.git
+        * verify healthcheck URLs in deployconfig & make sure the java app serves those endpoints
+    * cd springbootdemo
+    * git remote add openshift http://gogs-cicd-springbootdemo.192.168.42.249.nip.io/gogs/openshift-springbootdemo.git    
+    * git push openshift
 
-* verify healthcheck URLs in deployconfig & make sure the java app serves those endpoints
+
+* jenkins
+    * load jenkins gogs plugin
+    * setup webhook for jenkins
+
 
 
 * issues
@@ -29,9 +42,10 @@
       Error from server (Forbidden): User "developer" cannot update imagestreams.image.openshift.io in the namespace "openshift": User "developer" cannot update imagestreams.image.openshift.io in project "openshift" (put imagestreams.image.openshift.io jenkins)
     *  workaround: <br>
          * import jenkins image locally
+            oc import-image redhat-openjdk18-openshift --from="registry.access.redhat.com/redhat-openjdk-18/openjdk18-openshift" --confirm
 
-oc import-image redhat-openjdk18-openshift --from="registry.access.redhat.com/redhat-openjdk-18/openjdk18-openshift" --confirm
 
-then use simply image name=redhat-openjdk18-openshift
-check with 
-oc get is
+* continue
+    * oc project cicd-springbootdemo
+    * oc start-build springbootdemo-pipeline
+    

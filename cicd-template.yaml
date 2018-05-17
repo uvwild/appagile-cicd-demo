@@ -173,6 +173,7 @@ objects:
                       def dc = openshift.selector("dc", "springbootdemo")
                       def dcmap = dc.object()
                       return !dcmap.spec.triggers.imageChangeParams.automatic
+                    }
                   }
                 }
                 steps {
