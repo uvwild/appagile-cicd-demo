@@ -22,9 +22,8 @@ function usage() {
     echo 
     echo "OPTIONS:"
     echo "   --user [username]         The admin user for the demo projects. mandatory if logged in as system:admin"
-    echo "   --project-suffix [suffix] Suffix to be added to demo project names e.g. ci-SUFFIX. If empty, user will be used as suffix"
-    echo "   --ephemeral               Deploy demo without persistent storage. Default false"
-    echo "   --deploy-che              Deploy Eclipse Che as an online IDE for code changes. Default false"
+    echo "   --project-suffix [suffix] Suffix to be added to demo project names e.g. ci-SUFFIX. If empty, springbootdemo will be used as suffix"
+    echo "   --ephemeral               Deploy demo without persistent storage. Default true"
     echo "   --oc-options              oc client options to pass to all oc commands e.g. --server https://my.openshift.com"
     echo
 }
@@ -32,7 +31,7 @@ function usage() {
 ARG_USERNAME=
 ARG_PROJECT_SUFFIX=springbootdemo
 ARG_COMMAND=
-ARG_EPHEMERAL=false
+ARG_EPHEMERAL=true
 ARG_OC_OPS=
 ARG_DEPLOY_CHE=false
 
@@ -82,9 +81,6 @@ while :; do
             ;;
         --ephemeral)
             ARG_EPHEMERAL=true
-            ;;
-        --deploy-che)
-            ARG_DEPLOY_CHE=true
             ;;
         -h|--help)
             usage
