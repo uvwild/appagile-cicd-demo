@@ -136,7 +136,8 @@ function deploy() {
 
   sleep 2
 
-  oc import-image jenkins:v3.6 --from="registry.access.redhat.com/openshift3/jenkins-2-rhel7" --confirm -n openshift 2>/dev/null
+# do ut in local project only
+  oc import-image jenkins:v3.6 --from="registry.access.redhat.com/openshift3/jenkins-2-rhel7" --confirm  2>/dev/null
 
   sleep 5
 
