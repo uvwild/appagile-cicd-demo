@@ -172,15 +172,15 @@ objects:
                   }
                 }
               }
-# make sure the automatic trigger is off, otherwise skip this              
+# only run deploy if no automatic trigger is set
               stage('Deploy DEV') {
                 when {
                   expression {
                     openshift.withCluster() {
                       openshift.withProject(env.DEV_PROJECT) {
-                        def dc = openshift.selector("dc", "tasks")
-                        dc.describe()
-                        return false
+                      def dc = openshift.selector("dc", "tasks")
+                      def dcmap = dc.object()
+                      return !dcmap.spec.triggers.imageChangeParams.automatic
                   }
                 }
                 steps {
@@ -199,7 +199,6 @@ objects:
                   timeout(time:15, unit:'MINUTES') {
                       input message: "Promote to STAGE?", ok: "Promote"
                   }
-
                   script {
                     openshift.withCluster() {
                       openshift.tag("${env.DEV_PROJECT}/springbootdemo:latest", "${env.STAGE_PROJECT}/springbootdemo:${version}")
