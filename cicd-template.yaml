@@ -116,7 +116,7 @@ objects:
                   script {
                     openshift.withCluster() {
                       openshift.withProject(env.DEV_PROJECT) {
-                        openshift.newBuild("--name=springbootdemo", "--image-stream=wildfly", "--binary=true")
+                        openshift.newBuild("--name=springbootdemo", "--image-stream=wildfly-101-centos7", "--binary=true")
                       }
                     }
                   }
@@ -350,7 +350,7 @@ objects:
             -u $GOGS_USER:$GOGS_PWD -X POST http://$GOGS_SVC:3000/api/v1/repos/migrate -d @/tmp/data.json)
 
             if [ $_RETURN != "201" ] ;then
-              echo "ERROR: Failed to imported openshift-springbootdemo GitHub repo"
+              echo "ERROR: Failed to imported springbootdemo repo"
               cat /tmp/curl.log
               exit 255
             fi
